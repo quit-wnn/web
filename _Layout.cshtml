@@ -1,0 +1,89 @@
+﻿@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var username = HttpContextAccessor.HttpContext.Session.GetString("Username");
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Web</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand text-success fw-bold" asp-area="" asp-controller="Home" asp-action="Index">Cây Cảnh Thái Nguyên</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Trang Chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="TreeShop" asp-action="Index">Sản Phẩm</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="About">Trang</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Contact">Liên hệ với chúng tôi</a>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav">
+                        @if (!string.IsNullOrEmpty(username))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-success" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-circle"></i> @username
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="Profile">Hồ sơ cá nhân</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="EditProfile">Chỉnh sửa hồ sơ</a></li>
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li><a class="dropdown-item text-danger" asp-controller="Account" asp-action="Logout">Đăng xuất</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" asp-controller="Account" asp-action="Login">
+                                    <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    @if (currentAction != "Login" && currentAction != "Register")
+    {
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2025 - Web - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+    }
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Đăng nhập";
+}
+<div class="container-fluid py-5 mb-5 hero-header" style="min-height:100vh;">
+    <div class="container py-5 h-100 d-flex align-items-center justify-content-center">
+        <div class="row g-5 align-items-center w-100">
+            <div class="col-md-12 col-lg-7 mx-auto">
+                <h2 class="text-center text-success mb-4">Đăng nhập tài khoản</h2>
+
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger">
+                        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                        {
+                            <p>@error.ErrorMessage</p>
+                        }
+                    </div>
+                }
+                <form asp-action="Login" method="post">
+                    <div class="form-group mb-3">
+                        <label for="Username">Tên đăng nhập hoặc Email</label>
+                        <input type="text" name="Username" id="Username" class="form-control" placeholder="Nhập tên hoặc email" required />
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="Password">Mật khẩu</label>
+                        <input type="password" name="Password" id="Password" class="form-control" placeholder="Nhập mật khẩu" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-success w-100">Đăng nhập</button>
+                    </div>
+                </form>
+
+                <p class="text-center mt-3">
+                    Chưa có tài khoản? <a asp-action="Register" class="text-warning">Đăng ký ngay</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

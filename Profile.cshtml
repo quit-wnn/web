@@ -1,0 +1,25 @@
+﻿@model Web.Models.User
+@{
+    ViewData["Title"] = "Hồ sơ cá nhân";
+}
+<div class="container-fluid py-5 mb-5 hero-header" style="min-height:100vh;">
+    <div class="card shadow-sm p-4">
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <img src="@Model.AvatarUrl ?? "/images/default-avatar.png"" class="rounded-circle img-fluid mb-3" style="width: 150px; height: 150px;" alt="Avatar" />
+                <h4 class="text-success">@Model.Username</h4>
+                <p class="text-muted">@Model.Email</p>
+                <p><small>Thành viên từ: @Model.CreatedAt.ToString("dd/MM/yyyy")</small></p>
+            </div>
+            <div class="col-md-8">
+                <h5>📝 Giới thiệu</h5>
+                <p>@Model.Bio ?? "Chưa có mô tả cá nhân."</p>
+                <p><strong>Họ tên:</strong> @Model.FullName</p>
+                <p><strong>Ngày sinh:</strong> @Model.DateOfBirth?.ToString("dd/MM/yyyy")</p>
+                <p><strong>Quê quán:</strong> @Model.Hometown</p>
+                <p><strong>Số điện thoại:</strong> @Model.PhoneNumber</p>
+                <a asp-action="EditProfile" class="btn btn-outline-success mt-3">Chỉnh sửa hồ sơ</a>
+            </div>
+        </div>
+    </div>
+</div>
